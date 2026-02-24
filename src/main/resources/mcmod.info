@@ -1,21 +1,15 @@
 [
-{
-  "modid" : "mobdismemberment",
-  "name" : "MobDismemberment",
-  "version" : "${version}",
-  "url" : "http://ichun.me/mods/mob-dismemberment/",
-  "credits" : "",
-  "authorList": [
-    "iChun"
-  ],
-  "description": "Dismember mobs!",
-  "logoFile" : "",
-  "updateUrl" : "",
-  "parent" : "",
-  "screenshots": [
-  ],
-  "dependencies": [
-    "Forge", "iChunUtil"
-  ]
-}
+  {
+    "modid": "${mod_id}",
+    "name": "${mod_name}",
+    "description": "${mod_description}",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ${mod_author},
+  "credits": "",
+  "logoFile": "icon.png",
+  "dependencies": []
+  }
 ]
