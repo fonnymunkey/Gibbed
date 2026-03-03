@@ -1,0 +1,38 @@
+{
+  "gibbed": {
+    "category": "neutral",
+    "sounds": [ "gibbed:gibbed" ]
+  },
+  "gibbed_special": {
+    "category": "neutral",
+    "sounds": [ "gibbed:gibbed_special" ]
+  },
+  "gibbed_land": {
+    "category": "neutral",
+    "sounds": [
+      {
+        "name": "gibbed:gibbed_land0"
+      },
+      {
+        "name": "gibbed:gibbed_land1"
+      },
+      {
+        "name": "gibbed:gibbed_land2"
+      }
+    ]
+  },
+  "gibbed_special_land": {
+    "category": "neutral",
+    "sounds": [
+      {
+        "name": "gibbed:gibbed_special_land0"
+      },
+      {
+        "name": "gibbed:gibbed_special_land1"
+      },
+      {
+        "name": "gibbed:gibbed_special_land2"
+      }
+    ]
+  }
+}
