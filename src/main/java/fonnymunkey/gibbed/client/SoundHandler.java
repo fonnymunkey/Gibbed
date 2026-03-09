@@ -23,12 +23,12 @@ public class SoundHandler {
 	}
 	
 	public static SoundEvent getGibbedSound() {
-		if(isApril1 == null) isApril1 = LocalDate.now().withYear(2025).equals(LocalDate.of(2025, 3, 7));
+		if(isApril1 == null) isApril1 = LocalDate.now().withYear(2025).equals(LocalDate.of(2025, 4, 1));
 		return isApril1 ? GIBBED_SPECIAL : GIBBED;
 	}
 	
 	public static SoundEvent getGibLandSound() {
-		if(isApril1 == null) isApril1 = LocalDate.now().withYear(2025).equals(LocalDate.of(2025, 3, 7));
+		if(isApril1 == null) isApril1 = LocalDate.now().withYear(2025).equals(LocalDate.of(2025, 4, 1));
 		return isApril1 ? GIBBED_SPECIAL_LAND : GIBBED_LAND;
 	}
 	
