@@ -3,6 +3,7 @@ package fonnymunkey.gibbed.mixin.vanilla;
 import fonnymunkey.gibbed.client.RenderCaptureHandler;
 import fonnymunkey.gibbed.util.IModelRenderer;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -40,6 +41,14 @@ public abstract class ModelRendererMixin implements IModelRenderer {
 	
 	@Shadow
 	public List<ModelRenderer> childModels;
+	
+	@Shadow
+	private boolean compiled;
+	@Shadow
+	protected abstract void compileDisplayList(float scale);
+	@Shadow
+	private int displayList;
+	
 	//blegh
 	@Unique
 	private boolean gibbed$defaultsSet = false;
@@ -131,6 +140,37 @@ public abstract class ModelRendererMixin implements IModelRenderer {
 				for(ModelRenderer childRenderer : this.childModels) {
 					((IModelRenderer)childRenderer).gibbed$setToDefaultStates();
 				}
+			}
+		}
+	}
+	
+	//Literally the exact same as renderWithRotation except Optifine is really stupid and adds child rendering to it for no reason
+	@Unique
+	@Override
+	public void gibbed$renderSingular(float scale) {
+		if(!this.isHidden) {
+			if(this.showModel) {
+				if(!this.compiled) {
+					this.compileDisplayList(scale);
+				}
+				
+				GlStateManager.pushMatrix();
+				GlStateManager.translate(this.rotationPointX * scale, this.rotationPointY * scale, this.rotationPointZ * scale);
+				
+				if(this.rotateAngleY != 0.0F) {
+					GlStateManager.rotate(this.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+				}
+				
+				if(this.rotateAngleX != 0.0F) {
+					GlStateManager.rotate(this.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+				}
+				
+				if(this.rotateAngleZ != 0.0F) {
+					GlStateManager.rotate(this.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+				}
+				
+				GlStateManager.callList(this.displayList);
+				GlStateManager.popMatrix();
 			}
 		}
 	}

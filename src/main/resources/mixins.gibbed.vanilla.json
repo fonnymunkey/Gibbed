@@ -13,6 +13,7 @@
   "client": [
     "vanilla.EntityLivingBaseMixin",
     "vanilla.GlStateManagerMixin",
+    "vanilla.ModelRendererInvoker",
     "vanilla.ModelRendererMixin",
     "vanilla.RenderInvoker",
     "vanilla.RenderLivingBaseMixin",
