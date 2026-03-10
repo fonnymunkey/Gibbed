@@ -3,6 +3,7 @@ package fonnymunkey.gibbed.client;
 import fonnymunkey.gibbed.client.gib.EntityGib;
 import fonnymunkey.gibbed.client.gib.AbstractGib;
 import fonnymunkey.gibbed.client.gib.GibGenerator;
+import fonnymunkey.gibbed.client.particle.ParticleHandler;
 import fonnymunkey.gibbed.config.ConfigHandler;
 import fonnymunkey.gibbed.util.Pair;
 import fonnymunkey.gibbed.util.Triple;

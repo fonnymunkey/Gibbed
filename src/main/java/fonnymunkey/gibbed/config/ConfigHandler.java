@@ -186,20 +186,23 @@ public class ConfigHandler {
 	
 	public static class Particles {
 		
-		@Config.Comment("If BallisticBlood is added, blood particles will spawn from an entity being gibbed")
+		@Config.Comment("Spawns basic blood particles from gibs when an entity is gibbed" + "\n" +
+				"If BallisticBlood is loaded, fancier BallisticBlood particles will be used")
 		@Config.Name("Spawn Particles On Gibbed")
 		public boolean spawnParticlesOnGibbed = true;
 		
-		@Config.Comment("If BallisticBlood is added, blood particles will spawn from a gib hitting the ground")
+		@Config.Comment("Spawns basic blood particles from gibs when they hit the ground" + "\n" +
+				"If BallisticBlood is loaded, fancier BallisticBlood particles will be used")
 		@Config.Name("Spawn Particles On Gib Land")
 		public boolean spawnParticlesOnGibLand = true;
 		
-		@Config.Comment("Forces particles to use the generic BallisticBlood blood type rather than based on the entity being gibbed")
+		@Config.Comment("Forces particles to use the generic BallisticBlood blood type rather than being based on the entity being gibbed" + "\n" +
+				"Only affects BallisticBlood particles")
 		@Config.Name("Use Generic Blood Type")
 		public boolean useGenericBloodType = false;
 		
-		@Config.Comment("Scales the damage passed to BallisticBlood which is determined by the entities max health divided by the amount of gibs up to a limit" + "\n" +
-				"BallisticBlood config values can affect the amount of particles actually created based on the damage value")
+		@Config.Comment("Scales the amount of particles attempted to be created based on the entities max health and amount of gibs created" + "\n" +
+				"If BallisticBlood is loaded, BallisticBlood config values can affect the amount of particles actually created based on the computed value")
 		@Config.Name("Particle Amount Scale")
 		public float particleAmountScale = 1.0F;
 	}

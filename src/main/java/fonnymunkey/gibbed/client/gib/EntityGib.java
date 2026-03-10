@@ -1,6 +1,6 @@
 package fonnymunkey.gibbed.client.gib;
 
-import fonnymunkey.gibbed.client.ParticleHandler;
+import fonnymunkey.gibbed.client.particle.ParticleHandler;
 import fonnymunkey.gibbed.client.SoundHandler;
 import fonnymunkey.gibbed.config.ConfigHandler;
 import net.minecraft.entity.Entity;
