@@ -69,7 +69,42 @@ public class ConfigHandler {
 		
 		@Config.Comment("Blacklist of Entity Registry Names to blacklist from gibbing")
 		@Config.Name("Entity Gib Blacklist")
-		public String[] entityGibBlacklist = {};
+		public String[] entityGibBlacklist = {
+				"minecraft:slime",
+				"minecraft:magma_cube",
+				"minecraft:ender_dragon",
+				"iceandfire:firedragon",
+				"iceandfire:icedragon",
+				"iceandfire:lightningdragon",
+				"iceandfire:shivaxi_dragon",
+				"iceandfire:black_frost",
+				"iceandfire:dread_queen",
+				"iceandfire:dread_lich",
+				"iceandfire:dread_knight",
+				"iceandfire:dread_thrall",
+				"iceandfire:ghost",
+				"iceandfire:gorgon",
+				"iceandfire:if_hydra",
+				"lycanitesmobs:amalgalich",
+				"lycanitesmobs:asmodeus",
+				"lycanitesmobs:rahovart",
+				"lycanitesmobs:sylph",
+				"lycanitesmobs:wisp",
+				"lycanitesmobs:jengu",
+				"lycanitesmobs:cinder",
+				"lycanitesmobs:reiver",
+				"lycanitesmobs:wraith",
+				"lycanitesmobs:zephyr",
+				"lycanitesmobs:djinn",
+				"lycanitesmobs:grue",
+				"lycanitesmobs:spectre",
+				"defiledlands:the_destroyer",
+				"defiledlands:the_mourner",
+				"defiledlands:slime_defiled",
+				"betternether:firefly",
+				"charm:spectre",
+				"srparasites:*"//To many to test with how many have custom death handling
+		};
 		
 		@Config.Comment("Sets the Entity Gib Blacklist to instead act as a whitelist")
 		@Config.Name("Entity Gib Blacklist is Whitelist")
@@ -137,7 +172,15 @@ public class ConfigHandler {
 				"Format: Entity Registry Name, Max Branch Size Ratio, Max Branches Ratio" + "\n" +
 				"Example: minecraft:witch,0.4,0.8")
 		@Config.Name("Model Branch Ratio Overrides")
-		public String[] modelBranchRatioOverrides = {};
+		public String[] modelBranchRatioOverrides = {
+				"iceandfire:dread_scuttler,0.2,1.0",
+				"iceandfire:if_cockatrice,0.2,1.0",
+				"iceandfire:stymphalianbird,0.1,1.0",
+				"iceandfire:deathworm,0.1,1.0",
+				"iceandfire:hippocampus,0.2,1.0",
+				"iceandfire:amphithere,0.05,1.0",
+				"iceandfire:seaserpent,0.11,1.0"
+		};
 	}
 	
 	public static class Textures {
@@ -206,6 +249,7 @@ public class ConfigHandler {
 	}
 	
 	private static Set<ResourceLocation> entityGibBlacklist = null;
+	private static Set<String> entityGibModidBlacklist = null;
 	private static Set<ResourceLocation> layerTextureBlacklist = null;
 	private static Map<ResourceLocation,Pair<Float,Float>> entityBranchRatioOverrides = null;
 	
@@ -215,8 +259,10 @@ public class ConfigHandler {
 			return entity.getRNG().nextFloat() < GENERAL.playerGibChance;
 			//if(entity == Minecraft.getMinecraft().player && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) return false;
 		}
-		if(entityGibBlacklist == null) createEntityGibBlacklist();
-		if(entityGibBlacklist.contains(EntityList.getKey(entity)) == GENERAL.entityGibBlacklistIsWhitelist) {
+		if(entityGibBlacklist == null || entityGibModidBlacklist == null) createEntityGibBlacklist();
+		ResourceLocation loc = EntityList.getKey(entity);
+		if(loc == null) return false;
+		if(GENERAL.entityGibBlacklistIsWhitelist == (entityGibModidBlacklist.contains(loc.getNamespace()) || entityGibBlacklist.contains(loc))) {
 			if(explosion && GENERAL.explosionsAlwaysGib) return true;
 			return entity.getRNG().nextFloat() < GENERAL.entityGibChance;
 		}
@@ -225,10 +271,13 @@ public class ConfigHandler {
 	
 	private static void createEntityGibBlacklist() {
 		entityGibBlacklist = new HashSet<>();
+		entityGibModidBlacklist = new HashSet<>();
 		for(String name : GENERAL.entityGibBlacklist) {
 			name = name.trim();
 			if(name.isEmpty()) continue;
-			entityGibBlacklist.add(new ResourceLocation(name));
+			String[] split = name.split(":");
+			if(split.length == 2 && split[1].equals("*")) entityGibModidBlacklist.add(split[0]);
+			else entityGibBlacklist.add(new ResourceLocation(name));
 		}
 	}
 	
@@ -285,6 +334,7 @@ public class ConfigHandler {
 			if(event.getModID().equals(Gibbed.MODID)) {
 				ConfigManager.sync(Gibbed.MODID, Config.Type.INSTANCE);
 				entityGibBlacklist = null;
+				entityGibModidBlacklist = null;
 				layerTextureBlacklist = null;
 				entityBranchRatioOverrides = null;
 				GibGenerator.resetCache();
