@@ -1,6 +1,7 @@
 package fonnymunkey.gibbed.config;
 
 import fonnymunkey.gibbed.Gibbed;
+import fonnymunkey.gibbed.client.gib.GibGenerator;
 import fonnymunkey.gibbed.util.Pair;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -122,7 +123,6 @@ public class ConfigHandler {
 				"Lower values will result in more separated gibs, setting to 0 will result in a gib for each model box")
 		@Config.Name("Model Max Branch Size Ratio")
 		@Config.RangeDouble(min = 0.0D, max = 1.0D)
-		@Config.RequiresMcRestart
 		public double maxBranchSizeRatio = 0.3D;
 		
 		@Config.Comment("Affects models constructed with proper branching (Finger on Hand, Hand on Arm, etc.)" + "\n" +
@@ -130,7 +130,6 @@ public class ConfigHandler {
 				"Lower values will limit how many branches can be retained resulting in more separated gibs, setting to 0 will result in a gib for each model box")
 		@Config.Name("Model Max Branches Ratio")
 		@Config.RangeDouble(min = 0.0D, max = 1.0D)
-		@Config.RequiresMcRestart
 		public double maxBranchesRatio = 1.0D;
 		
 		@Config.Comment("Affects models constructed with proper branching (Finger on Hand, Hand on Arm, etc.)" + "\n" +
@@ -138,7 +137,6 @@ public class ConfigHandler {
 				"Format: Entity Registry Name, Max Branch Size Ratio, Max Branches Ratio" + "\n" +
 				"Example: minecraft:witch,0.4,0.8")
 		@Config.Name("Model Branch Ratio Overrides")
-		@Config.RequiresMcRestart
 		public String[] modelBranchRatioOverrides = {};
 	}
 	
@@ -288,6 +286,8 @@ public class ConfigHandler {
 				ConfigManager.sync(Gibbed.MODID, Config.Type.INSTANCE);
 				entityGibBlacklist = null;
 				layerTextureBlacklist = null;
+				entityBranchRatioOverrides = null;
+				GibGenerator.resetCache();
 			}
 		}
 	}

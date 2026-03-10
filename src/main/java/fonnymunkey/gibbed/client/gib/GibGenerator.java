@@ -26,6 +26,10 @@ public class GibGenerator {
 	public static final ResourceLocation GORE_TEXTURE = new ResourceLocation(Gibbed.MODID, "textures/gore.png");
 	private static final Map<RenderLivingBase<? extends EntityLivingBase>,List<AbstractGib>> cachedGibs = new HashMap<>();
 	
+	public static void resetCache() {
+		cachedGibs.clear();
+	}
+	
 	public static Map<AbstractGib,Triple<float[],ResourceLocation,ResourceLocation>> getGibsFromEntity(EntityLivingBase entity) {
 		Map<Object,Triple<float[],ResourceLocation,ResourceLocation>> capturedRenderers = RenderCaptureHandler.getCapturedRenderers(entity);
 		if(capturedRenderers == null && ConfigHandler.MODELS.onlyGibContextCapturedEntities) return Collections.emptyMap();
